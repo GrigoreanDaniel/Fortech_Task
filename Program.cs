@@ -1,4 +1,4 @@
-﻿//Hello, if you will try other methods that I presented down below, please do not forget to put some brackets for the fuction
+//Hello, if you will try other methods that I presented down below, please do not forget to put some brackets for the fuction
 
 using System;
 using System.Globalization; // for Title Case
@@ -27,7 +27,9 @@ namespace FortechTask
             Console.WriteLine("4. Number of words");
             Console.WriteLine("5. Title case");
             Console.WriteLine("6. Palindrom");
-            Console.WriteLine("7. Exit");
+            Console.WriteLine("7. Shortest and Longest Word");
+            Console.WriteLine("8. Try me O_o");
+            Console.WriteLine("9. Exit");
             Console.Write("\nSelect an option : ");
 
             switch (Console.ReadLine())
@@ -51,12 +53,18 @@ namespace FortechTask
                 case "5":
                     titleCase();
                     return true;
-                
+
                 case "6":
                     palindrom();
                     return true;
-
                 case "7":
+                    Long_Short();
+                    return true;
+                case "8":
+                    tryMe();
+                    return true;
+
+                case "9":
                     return false;
 
                 default:
@@ -64,6 +72,7 @@ namespace FortechTask
 
             }
         }
+        //----------------------------------------------------------------------------------//
 
 
         private static string PlayerInput()
@@ -71,6 +80,7 @@ namespace FortechTask
             Console.Write("Enter the string : ");
             return Console.ReadLine();
         }
+        //----------------------------------------------------------------------------------//
 
         private static void Uppercase()
         {
@@ -82,6 +92,8 @@ namespace FortechTask
             result = result.ToUpper();
             DisplayResult(String.Concat(result));
         }
+        //----------------------------------------------------------------------------------//
+
         private static void Reverse()
         {
             Console.Clear();
@@ -90,7 +102,7 @@ namespace FortechTask
             char[] charArray = PlayerInput().ToCharArray();
             //----------------------------------------------------------------------------------//
 
-            //Method I for reverse, this method is how I was taught in highschool (sort of)
+            //Method I for reverse | this method is how I was taught in highschool (sort of)
             //For loop that start from the last letter to the first letter
             //Our empty string reverse get's the letters and then we display it 😃
 
@@ -103,7 +115,7 @@ namespace FortechTask
 
             //----------------------------------------------------------------------------------
 
-            //Method II for reverse, with my special assistant Google Search I found this method() to use it so the program it's shorter and maybe better
+            //Method II for reverse | with my special assistant Google Search I found this method() to use it so the program it's shorter and maybe better
 
             /*  
              
@@ -121,7 +133,7 @@ namespace FortechTask
             Console.WriteLine("Number of Vowels");
             int numVowels = 0;
 
-            //char[] vowels = { 'a', 'e', 'i', 'o', 'u'};
+
             //----------------------------------------------------------------------------------//
             char[] charArray = PlayerInput().ToCharArray();
 
@@ -165,7 +177,7 @@ namespace FortechTask
 
             int letters = 0, words = 1;
 
-            
+
             while (letters <= charArray.Length - 1) // repeats until the string ends
             {
                 if (charArray[letters] == ' ' || charArray[letters] == '\n') // checks if the current character is a white space or a new line. press ctrl + z for a new line to enter
@@ -212,7 +224,7 @@ namespace FortechTask
             int left = 0, right = charArray.Length - 1;
             int ok = 1;
 
-            while(left < right)
+            while (left < right)
             {
                 if (charArray[left] != charArray[right])
                 {
@@ -221,12 +233,12 @@ namespace FortechTask
                 left++;
                 right--;
             }
-            
-            
+
+
             DisplayPalindrom(String.Concat(ok));
-        
-        
-            //( Reverse(charArray) == charArray )
+
+
+            // if( Reverse(charArray) == charArray )
         }
         //----------------------------------------------------------------------------------//
 
@@ -236,31 +248,84 @@ namespace FortechTask
             Console.WriteLine("Longest and Shortest word");
 
             char[] charArray = PlayerInput().ToCharArray();
-            string test = new string(charArray).ToLower() + " "; // lowering the string and adding a space to get the last word
-            string word = string.Empty; // an 
-            char[] words = new char[200]; //
+            string sentence = new string(charArray) + " "; // getting the input from the user and adding an extra space
+            string word = string.Empty, shortest = string.Empty, longest = string.Empty;
+            string[] words = new string[200]; //
+            int length = 0;
 
-
-            for (int i = 0; i < test.Length - 1; i++)
+            for (int i = 0; i < sentence.Length; i++)
             {
-                // splits the string into words
-                if (test[i] != ' ')
+                // Spliting the string into words
+                if (sentence[i] != ' ')
                 {
-                    word = word + test[i];
+                    word = word + sentence[i];
                 }
-                // when space found, adds the word to a vector word
                 else
                 {
-                    words = word.ToCharArray();
+                    // Addind the words into a array | Incrementing the length | Emptying the string word
+                    words[length] = word;
+                    length++;
                     word = string.Empty;
                 }
             }
+            // Initialize short and long as the first word
+            shortest = longest = words[0];
 
-            char long = new char(words[0]);
-            char[] short = words[0];
+            // A little check because I had an error I guess. I don't remember...
+            if (words[0] == null)
+            {
+                Console.WriteLine(words[0]);
+            }
 
-            DisplayResult(String.Concat(long_SHort));
-        }   
+            for (int j = 0; j < length; j++)
+            {
+                //If length of short is greater than any word present in the string  
+                //Store value of word into small 
+                if (shortest.Length > words[j].Length)
+                    shortest = words[j];
+
+                //If length of long is less than any word present in the string  
+                //Store value of word into large  
+                if (longest.Length < words[j].Length)
+                    longest = words[j];
+            }
+
+            if (string.IsNullOrEmpty(shortest) || string.IsNullOrEmpty(longest))
+            {
+                Console.WriteLine("\nTry again using a word");
+            }
+            DisplayShort(String.Concat(shortest));
+            DisplayLong(String.Concat(longest));
+        }
+        //----------------------------------------------------------------------------------//
+        // This is a special string manipulation
+        private static void tryMe()
+        {
+            Console.Clear();
+            Console.WriteLine("Hello, this is a special option. Enjoy it :D");
+            Console.WriteLine("Please enter the following string: hello Fortech");
+            char[] charArray = PlayerInput().ToCharArray();
+            string result = new string(charArray);
+            result = result.ToUpper();
+
+            string reverse = String.Empty;
+            for (int i = result.Length - 1; i > -1; i--)
+            {
+                reverse += result[i];
+            }
+            string whitespace = string.Empty;
+            for (int i = 0; i < reverse.Length; i++)
+            {
+                if (reverse[i] != ' ')
+                    whitespace += reverse[i];
+            }
+            if (whitespace == "HCETROFOLLEH")
+            {
+                Console.WriteLine("\nThank you for this oportunity. Due to your tasks, I learned some basic knowledge about C#");
+                Console.WriteLine("Have a beautiful day");
+            }
+            DisplaytryMe(String.Concat(whitespace));
+        }
         //----------------------------------------------------------------------------------//
         // Function for displaying the result of the option selected
         private static void DisplayResult(string message)
@@ -306,7 +371,30 @@ namespace FortechTask
             Console.Write("\nPress Enter to return to Main Menu");
             Console.ReadLine();
         }
-    
-    
+        //----------------------------------------------------------------------------------//
+
+        // Function to display the shortest and longest word in a string 
+        private static void DisplayShort(string message)
+        {
+            Console.WriteLine($"\nThe shortest word in your string is: {message}");
+        }
+        private static void DisplayLong(string message)
+        {
+            Console.WriteLine($"\nThe longest word in your string is: {message}");
+            Console.Write("\nPress Enter to return to Main Menu");
+            Console.ReadLine();
+        }
+
+        //----------------------------------------------------------------------------------//
+
+ 
+        // Function for displaying the result of a very special option selected
+        private static void DisplaytryMe(string message)
+        {
+            Console.WriteLine("\nYour string suffered those changes: uppercase + reverse + removing the whitespace");
+            Console.WriteLine($"\nYour modified string is: {message}");
+            Console.Write("\nPress Enter to return to Main Menu");
+            Console.ReadLine();
+        }
     }
 }
